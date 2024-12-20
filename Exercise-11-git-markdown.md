@@ -3,7 +3,7 @@ Exercise-11-git-markdown
 MM
 2024-12-20
 
-## Downloading packages
+# Downloading packages
 
 ``` r
 library(tidyverse)
@@ -27,7 +27,7 @@ library(haven)
 x<-read_sav("data/ESS9e03_2.sav")
 ```
 
-## Having a look at the dataset
+# Having a look at the dataset
 
 ``` r
 head(x)
@@ -49,6 +49,10 @@ head(x)
     ## #   trstlgl <dbl+lbl>, trstplc <dbl+lbl>, trstplt <dbl+lbl>, trstprt <dbl+lbl>,
     ## #   trstep <dbl+lbl>, trstun <dbl+lbl>, vote <dbl+lbl>, prtvtcat <dbl+lbl>,
     ## #   prtvtdbe <dbl+lbl>, prtvtdbg <dbl+lbl>, prtvtgch <dbl+lbl>, …
+
+# Recoding the variables
+
+### finding the variables in the documentation :
 
 ## Including Plots
 

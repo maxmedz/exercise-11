@@ -9,7 +9,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Downloading packages
+# Downloading packages
 
 ```{r, eval=TRUE, results = "hide", echo=TRUE}
 library(tidyverse)
@@ -21,10 +21,18 @@ x<-read_sav("data/ESS9e03_2.sav")
 
 
 
-## Having a look at the dataset
+# Having a look at the dataset
 ```{r, eval=TRUE, echo=TRUE}
 head(x)
 ```
+
+
+# Recoding the variables
+### finding the variables in the documentation :
+
+
+
+
 ## Including Plots
 
 You can also embed plots, for example:
