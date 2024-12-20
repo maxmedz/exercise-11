@@ -2,7 +2,7 @@
 title: "Exercise-11-git-markdown"
 author: "MM"
 date: "2024-12-20"
-output: html_document
+output: github document
 ---
 
 ```{r setup, include=FALSE}
