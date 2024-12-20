@@ -9,16 +9,21 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Downloading packages
 
-
-```{r, eval=TRUE}
+```{r, eval=TRUE, results = "hide", echo=TRUE}
 library(tidyverse)
 library(dplyr)
 library(broom)
 library(haven)
 x<-read_sav("data/ESS9e03_2.sav")
-glimpse(x)
+```
+
+
+
+## Having a look at the dataset
+```{r, eval=TRUE, echo=TRUE}
+head(x)
 ```
 ## Including Plots
 
