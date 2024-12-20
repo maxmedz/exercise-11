@@ -7,10 +7,11 @@
 # Economic insecurity and religious reassurance (ESS) -- student answer script
 #
 # Group number:
-# Student 1:
-# Student 2:
-# Student 3:
-# Date:
+# Student 1: Ariane ARNAUD
+# Student 2: Victor DEVENNE
+# Student 3: Nino SICHINAVA
+# Student 4: Maxim MEDZMARIASHVILI
+# Date: 22.12.2024
 #
 # Answers to questions
 # --------------------
