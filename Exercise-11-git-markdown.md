@@ -148,14 +148,36 @@ table(df$marsts)
     ##     1     2     3     4     5     6 
     ##  1173   166   533  4301  4752 14439
 
-Recoding marital status 1or2;3or4or5;6or66or77or88or99</br> Eventually
-this code will transform NA into 3rd category</br> There haven’t been
-restrictions about that so we keep it !
+### Recoding marital status :
+
+1or2;3or4or5;6or66or77or88or99</br> Eventually this code will transform
+NA into 3rd category</br> There haven’t been restrictions about that so
+we keep it !
 
 ``` r
 df<-mutate(df,marsts=ifelse(marsts %in% c(1,2),1,
                             ifelse(marsts %in% c(3,4,5),2,3)))
+table(df$marsts)
 ```
+
+### Reconding religion attendance
+
+``` r
+df<-mutate(df,rlgatnd = 7-rlgatnd)
+table(df$rlgatnd)
+```
+
+    ## 
+    ##     0     1     2     3     4     5     6 
+    ## 16603  9707 11405  4904  4945  1180   389
+
+# \[QUESTION 2.1\] Report the percentage of females in the sample : 53.51%
+
+``` r
+female<-round(nrow(filter(df,sex==1))/nrow(df),4)*100
+```
+
+    ## [1] 53.51
 
 ## Including Plots
 
