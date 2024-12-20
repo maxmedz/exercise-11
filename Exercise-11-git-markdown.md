@@ -54,6 +54,109 @@ head(x)
 
 ### finding the variables in the documentation :
 
+age -\> agea</br> sex -\> gndr -\> to recode : 1 female; 0 male </br>
+employment relationship -\> emplrel</br> marital status -\> marsts -\>
+to be recoded into 3 groups</br> subjective income -\> hincfel</br>
+religious attendance -\> rlgatnd \_\> recode</br>
+
+## Selecting the variable we need and creating a dataset
+
+``` r
+df<-select(x,
+           age = agea,
+           sex = gndr,
+           emplrel,
+           marsts,
+           subjinc = hincfel,
+           rlgatnd,
+           cntry
+           )
+```
+
+quickly exploring the variables in question
+
+``` r
+table(as_factor(df$sex))
+```
+
+    ## 
+    ##      Male    Female No answer 
+    ##     23020     26499         0
+
+``` r
+table(df$sex)
+```
+
+    ## 
+    ##     1     2 
+    ## 23020 26499
+
+since female is coded as 2, and male as 1 we can just -1
+
+``` r
+df<-mutate(df, sex=sex-1)
+```
+
+``` r
+table(df$sex)
+```
+
+    ## 
+    ##     0     1 
+    ## 23020 26499
+
+``` r
+table(df$emplrel)
+```
+
+    ## 
+    ##     1     2     3 
+    ## 39131  5014   831
+
+``` r
+df.emplrel<-as.factor(df$emplrel)
+table(as_factor(df$marsts))
+```
+
+    ## 
+    ##                                                    Legally married 
+    ##                                                               1173 
+    ##                                In a legally registered civil union 
+    ##                                                                166 
+    ##                                                  Legally separated 
+    ##                                                                533 
+    ##                             Legally divorced/Civil union dissolved 
+    ##                                                               4301 
+    ##                                         Widowed/Civil partner died 
+    ##                                                               4752 
+    ## None of these (NEVER married or in legally registered civil union) 
+    ##                                                              14439 
+    ##                                                     Not applicable 
+    ##                                                                  0 
+    ##                                                            Refusal 
+    ##                                                                  0 
+    ##                                                         Don't know 
+    ##                                                                  0 
+    ##                                                          No answer 
+    ##                                                                  0
+
+``` r
+table(df$marsts)
+```
+
+    ## 
+    ##     1     2     3     4     5     6 
+    ##  1173   166   533  4301  4752 14439
+
+Recoding marital status 1or2;3or4or5;6or66or77or88or99</br> Eventually
+this code will transform NA into 3rd category</br> There haven’t been
+restrictions about that so we keep it !
+
+``` r
+df<-mutate(df,marsts=ifelse(marsts %in% c(1,2),1,
+                            ifelse(marsts %in% c(3,4,5),2,3)))
+```
+
 ## Including Plots
 
 You can also embed plots, for example:
