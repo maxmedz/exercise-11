@@ -164,7 +164,30 @@ p <- ggplot(data = m1_aug,
 p + geom_point()
 ```
 </br>
+
 The residuals vs fitted plot indicates that the model is super biased residuals are not randomly distributed around 0 and higher residuals are associated with lower fitted values.
 
+# 6. Start thinking beyond 'flat' models
+# [QUESTION 6.1] 
+## Report the country-level effect for Poland. 1.4 (Answer with a single number, rounded up to 1-digit precision.)
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+First, lets have a look at countries
+```{r, eval=TRUE, echo=TRUE}
+df$cntry<-as.factor(df$cntry)
+table(as_factor(df$cntry))
+```
+Let's run the model with a country
+```{r, eval=TRUE, echo=TRUE}
+m2<-lm(rlgatnd~age+sex+emplrel+marsts+subjinc+sexmar+cntry,data=df)
+```
+```{r, eval=TRUE, echo=FALSE}
+texreg::screenreg(m2)
+```
+What is the country level effect for Poland ?
+```{r, eval=TRUE, echo=TRUE}
+round(coef(m2)["cntryPL"],1)
+```
+# [QUESTION 6.2] 
+## Can you guess why I am asking you to include country of residence as a predictor, and if so, what kind of modelling strategy is being suggested to you here?
+Potentially this will help to better understand the effect of different countries. Some countries might have a historically higher religiousness, and it is important to control for that. Also, There might be some patterns within a country and then we shall go and dive deeper and explore the relations within each country.
+

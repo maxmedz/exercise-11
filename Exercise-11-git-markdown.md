@@ -351,9 +351,133 @@ p + geom_point()
 ```
 
 ![](Exercise-11-git-markdown_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+</br>
+
 The residuals vs fitted plot indicates that the model is super biased
 residuals are not randomly distributed around 0 and higher residuals are
 associated with lower fitted values.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+# 6. Start thinking beyond ‘flat’ models
+
+# \[QUESTION 6.1\]
+
+## Report the country-level effect for Poland. 1.4 (Answer with a single number, rounded up to 1-digit precision.)
+
+First, lets have a look at countries
+
+``` r
+df$cntry<-as.factor(df$cntry)
+table(as_factor(df$cntry))
+```
+
+    ## 
+    ##   AT   BE   BG   CH   CY   CZ   DE   DK   EE   ES   FI   FR   GB   HR   HU   IE 
+    ## 2499 1767 2198 1542  781 2398 2358 1572 1904 1668 1755 2010 2204 1810 1661 2216 
+    ##   IS   IT   LT   LV   ME   NL   NO   PL   PT   RS   SE   SI   SK 
+    ##  861 2745 1835  918 1200 1673 1406 1500 1055 2043 1539 1318 1083
+
+Let’s run the model with a country
+
+``` r
+m2<-lm(rlgatnd~age+sex+emplrel+marsts+subjinc+sexmar+cntry,data=df)
+```
+
+    ## 
+    ## =========================
+    ##              Model 1     
+    ## -------------------------
+    ## (Intercept)      0.26 ***
+    ##                 (0.07)   
+    ## age              0.01 ***
+    ##                 (0.00)   
+    ## sex              0.64 ***
+    ##                 (0.07)   
+    ## emplrel          0.01    
+    ##                 (0.02)   
+    ## marsts           0.17 ***
+    ##                 (0.02)   
+    ## subjinc          0.02 ** 
+    ##                 (0.01)   
+    ## sexmar          -0.13 ***
+    ##                 (0.03)   
+    ## cntryBE         -0.52 ***
+    ##                 (0.04)   
+    ## cntryBG          0.07    
+    ##                 (0.04)   
+    ## cntryCH         -0.21 ***
+    ##                 (0.04)   
+    ## cntryCY          1.20 ***
+    ##                 (0.06)   
+    ## cntryCZ         -0.76 ***
+    ##                 (0.04)   
+    ## cntryDE         -0.34 ***
+    ##                 (0.04)   
+    ## cntryDK         -0.37 ***
+    ##                 (0.04)   
+    ## cntryEE         -0.44 ***
+    ##                 (0.04)   
+    ## cntryES         -0.29 ***
+    ##                 (0.04)   
+    ## cntryFI         -0.33 ***
+    ##                 (0.04)   
+    ## cntryFR         -0.59 ***
+    ##                 (0.04)   
+    ## cntryGB         -0.44 ***
+    ##                 (0.04)   
+    ## cntryHR          0.44 ***
+    ##                 (0.04)   
+    ## cntryHU         -0.23 ***
+    ##                 (0.04)   
+    ## cntryIE          0.66 ***
+    ##                 (0.04)   
+    ## cntryIS         -0.50 ***
+    ##                 (0.05)   
+    ## cntryIT          0.52 ***
+    ##                 (0.04)   
+    ## cntryLT          0.49 ***
+    ##                 (0.04)   
+    ## cntryLV         -0.28 ***
+    ##                 (0.05)   
+    ## cntryME          0.48 ***
+    ##                 (0.05)   
+    ## cntryNL         -0.61 ***
+    ##                 (0.04)   
+    ## cntryNO         -0.44 ***
+    ##                 (0.05)   
+    ## cntryPL          1.44 ***
+    ##                 (0.05)   
+    ## cntryPT          0.29 ***
+    ##                 (0.05)   
+    ## cntryRS          0.36 ***
+    ##                 (0.04)   
+    ## cntrySE         -0.52 ***
+    ##                 (0.04)   
+    ## cntrySI         -0.02    
+    ##                 (0.05)   
+    ## cntrySK          0.90 ***
+    ##                 (0.05)   
+    ## -------------------------
+    ## R^2              0.17    
+    ## Adj. R^2         0.17    
+    ## Num. obs.    44057       
+    ## =========================
+    ## *** p < 0.001; ** p < 0.01; * p < 0.05
+
+What is the country level effect for Poland ?
+
+``` r
+round(coef(m2)["cntryPL"],1)
+```
+
+    ## cntryPL 
+    ##     1.4
+
+# \[QUESTION 6.2\]
+
+## Can you guess why I am asking you to include country of residence as a predictor, and if so, what kind of modelling strategy is being suggested to you here?
+
+Potentially this will help to better understand the effect of different
+countries. Some countries might have a historically higher
+religiousness, and it is important to control for that. Also, There
+might be some patterns within a country and then we shall go and dive
+deeper and explore the relations within each country.
