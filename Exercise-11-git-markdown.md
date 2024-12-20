@@ -301,13 +301,59 @@ texreg::screenreg(m1)
     ## *** p < 0.001; ** p < 0.01; * p < 0.05
 
 All coefficients are statistically significant both under p\<0.001 and
-p\<0.05.
+p\<0.05. However, both R-squared and adjusted R-squared are super low.
+Hence, the model has a low predictive ability.
 
-## Including Plots
+# \[QUESTION 4.1\]
 
-You can also embed plots, for example:
+## Do females report higher religious attendance than males,independently of age, employment status, marital status or subjective income? (Answer Yes or No.)
 
-![](Exercise-11-git-markdown_files/figure-gfm/pressure-1.png)<!-- -->
+## Yes
+
+This is what the positive coefficient of <b>sex</b> variable indicates.
+
+# \[QUESTION 4.2\]
+
+## Does the model support the view that economic insecurity increases religious attendance?
+
+## Yes
+
+The coefficient for income self-assessment is positive thus the more
+insecure respondents are, the more religious they are. Same for
+employment. Employed are less religious than those who work
+independently.
+
+# \[QUESTION 4.3\]
+
+## How do you interpret the interaction in the model?
+
+Interaction coefficient in general : 0 for men. So it is controlling for
+women measuring how women marriage status affect their religiousness.
+Basically, since its negative the less married the women is the less she
+will be religious. Whereas if she lives or has lived with a man, she
+tends to be more religious.
+
+# 5. Diagnose a linear regression model
+
+Firstly, it is worth mentioning that the adjusted R-squared is super low
+which means that only 4% of variation in religiousness is explained by
+the predictors.
+
+# \[QUESTION 5\]
+
+## According to its residuals, how biased is the model, and what does that mean in terms of its capacity to predict religious attendance from our list of predictors?
+
+``` r
+m1_aug<-augment(m1)
+p <- ggplot(data = m1_aug,
+            mapping = aes(x = .fitted, y = .resid))
+p + geom_point()
+```
+
+![](Exercise-11-git-markdown_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+The residuals vs fitted plot indicates that the model is super biased
+residuals are not randomly distributed around 0 and higher residuals are
+associated with lower fitted values.
 
 Note that the `echo = FALSE` parameter was added to the code chunk to
 prevent printing of the R code that generated the plot.
