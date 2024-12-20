@@ -9,11 +9,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Downloading packages
+# Downloading packages :
 
 ```{r, eval=TRUE, results = "hide", echo=TRUE}
-library(tidyverse)
 library(dplyr)
+library(tidyverse)
 library(broom)
 library(haven)
 x<-read_sav("data/ESS9e03_2.sav")
@@ -21,22 +21,22 @@ x<-read_sav("data/ESS9e03_2.sav")
 
 
 
-# Having a look at the dataset
+# Having a look at the dataset :
 ```{r, eval=TRUE, echo=TRUE}
 head(x)
 ```
 
 
-# Recoding the variables
-### finding the variables in the documentation :
- age -> agea</br>
- sex -> gndr -> to recode : 1 female; 0 male </br>
- employment relationship -> emplrel</br>
- marital status -> marsts -> to be recoded into 3 groups</br>
- subjective income -> hincfel</br>
- religious attendance -> rlgatnd _> recode</br>
+# Data preparation
+### Finding the variables in the documentation :
+- age -> agea</br>
+- sex -> gndr -> to recode : 1 female; 0 male </br>
+- employment relationship -> emplrel</br>
+- marital status -> marsts -> to be recoded into 3 groups</br>
+- subjective income -> hincfel</br>
+- religious attendance -> rlgatnd _> recode</br>
 
-## Selecting the variable we need and creating a dataset
+### Selecting the variables we need and creating a dataset :
 ```{r, eval=TRUE, results = "hide", echo=TRUE}
 df<-select(x,
            age = agea,
@@ -48,12 +48,12 @@ df<-select(x,
            cntry
            )
 ```
-quickly exploring the variables in question
+### Quickly exploring the variables in question :
 ```{r, eval=TRUE, echo=TRUE}
 table(as_factor(df$sex))
 table(df$sex)
 ```
-since female is coded as 2, and male as 1 we can just -1
+Since female is coded as 2, and male as 1 we can just substract 1
 ```{r, eval=TRUE, results = "hide", echo=TRUE}
 df<-mutate(df, sex=sex-1)
 ```
@@ -65,7 +65,7 @@ table(as_factor(df$marsts))
 table(df$marsts)
 ```
 ### Recoding marital status :
-1or2;3or4or5;6or66or77or88or99</br>
+#### 1or2;3or4or5;6or66or77or88or99</br>
 Eventually this code will transform NA into 3rd category</br>
 There haven't been restrictions about that so we keep it !
 ```{r, eval=TRUE, results = "hide", echo=TRUE}
@@ -73,7 +73,7 @@ df<-mutate(df,marsts=ifelse(marsts %in% c(1,2),1,
                             ifelse(marsts %in% c(3,4,5),2,3)))
 table(df$marsts)
 ```
-### Reconding religion attendance
+### Recoding religion attendance :
 ```{r, eval=TRUE, results = "hide", echo=FALSE}
 table(as_factor(df$rlgatnd))
 table(df$rlgatnd)
@@ -82,13 +82,52 @@ table(df$rlgatnd)
 df<-mutate(df,rlgatnd = 7-rlgatnd)
 table(df$rlgatnd)
 ```
-# [QUESTION 2.1] Report the percentage of females in the sample : 53.51%
+# [QUESTION 2.1] 
+## Report the percentage of females in the sample : 53.51%.
 ```{r, eval=TRUE, results = "hide", echo=TRUE}
 female<-round(nrow(filter(df,sex==1))/nrow(df),4)*100
 ```
 ```{r, eval=TRUE, echo=FALSE}
 female
 ```
+# [QUESTION 2.2] 
+## Report the percentage of separated, divorced or widowed individuals in the sample, after recoding marital status : 19.36%.
+```{r, eval=TRUE, results = "hide", echo=TRUE}
+prop.table(table(df$marsts))
+nonmarried<-round(nrow(filter(df,marsts==2))/nrow(df),4)*100
+```
+```{r, eval=TRUE, echo=FALSE}
+nonmarried
+```
+# [QUESTION 2.3] 
+## Report average religious attendance in the sample, after recoding it, and treating it as a continuous measurement : 1.53%.
+```{r, eval=TRUE, results = "hide", echo=TRUE}
+avg_rlgatnd<-round(mean(df$rlgatnd,na.rm=TRUE),2)
+```
+```{r, eval=TRUE, echo=FALSE}
+avg_rlgatnd
+```
+# 3. Write a multiple linear regression model :
+
+Including an interaction term :
+```{r, eval=TRUE, results="hide", echo=TRUE}
+df<-mutate(df,sexmar=df$sex*df$marsts)
+```
+# [QUESTION 3] 
+## Provide the formula of your model, in R syntax :
+```{r, eval=TRUE, echo=TRUE}
+m1<-lm(rlgatnd~age+sex+emplrel+marsts+subjinc+sexmar,data=df)
+```
+# 4. Interpret regression results :
+## Straightforward model summary :
+```{r, eval=TRUE, echo=TRUE}
+summary(m1)
+```
+## Fancy model output :
+```{r, eval=TRUE, echo=TRUE}
+texreg::screenreg(m1)
+```
+All coefficients are statistically significant both under p<0.001 and p<0.05.
 
 
 ## Including Plots
