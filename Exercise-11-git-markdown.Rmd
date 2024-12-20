@@ -12,8 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 # Downloading packages :
 
 ```{r, eval=TRUE, results = "hide", echo=TRUE}
-library(dplyr)
 library(tidyverse)
+library(dplyr)
 library(broom)
 library(haven)
 x<-read_sav("data/ESS9e03_2.sav")
@@ -187,6 +187,8 @@ What is the country level effect for Poland ?
 ```{r, eval=TRUE, echo=TRUE}
 round(coef(m2)["cntryPL"],1)
 ```
+After reading some documentation about including the categorical variables into the multiple linear regression, the country-level effect for Poland indicates that after switching from a baseline country (which is Austria in our case) to Poland increases the religiousness (ceteris paribus).
+
 # [QUESTION 6.2] 
 ## Can you guess why I am asking you to include country of residence as a predictor, and if so, what kind of modelling strategy is being suggested to you here?
 Potentially this will help to better understand the effect of different countries. Some countries might have a historically higher religiousness, and it is important to control for that. Also, There might be some patterns within a country and then we shall go and dive deeper and explore the relations within each country.

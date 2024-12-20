@@ -6,36 +6,22 @@ MM
 # Downloading packages :
 
 ``` r
-library(dplyr)
-```
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 library(tidyverse)
 ```
 
     ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ## ✔ forcats   1.0.0     ✔ readr     2.1.5
-    ## ✔ ggplot2   3.5.1     ✔ stringr   1.5.1
-    ## ✔ lubridate 1.9.3     ✔ tibble    3.2.1
-    ## ✔ purrr     1.0.2     ✔ tidyr     1.3.1
-
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.0.2     
     ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
 ``` r
+library(dplyr)
 library(broom)
 library(haven)
 x<-read_sav("data/ESS9e03_2.sav")
@@ -471,6 +457,12 @@ round(coef(m2)["cntryPL"],1)
 
     ## cntryPL 
     ##     1.4
+
+After reading some documentation about including the categorical
+variables into the multiple linear regression, the country-level effect
+for Poland indicates that after switching from a baseline country (which
+is Austria in our case) to Poland increases the religiousness (ceteris
+paribus).
 
 # \[QUESTION 6.2\]
 
