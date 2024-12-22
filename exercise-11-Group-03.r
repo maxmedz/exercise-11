@@ -6,7 +6,7 @@
 #
 # Economic insecurity and religious reassurance (ESS) -- student answer script
 #
-# Group number:
+# Group number: 03
 # Student 1: Ariane ARNAUD
 # Student 2: Victor DEVENNE
 # Student 3: Nino SICHINAVA
@@ -52,9 +52,10 @@
 # Feedback on the exercise
 # ------------------------
 #
-# [Feel free to replace this paragraph with your impressions on this exercise.
-# If your text goes beyond 80 characters per line, break it into shorter lines,
-# as demonstrated in this example paragraph.]
+# Not very hard exercise. However, not super clear how to deal with NAs. Also,
+# felt like a bit too easy, hence, we might have forgotten smth. Would like to
+# do more explorations and analysis on the dataset.Really liked the intro of
+# interaction coefficient and country level effect intro. 
 #
 # ============================= See README file for data sources and details ===
 
@@ -195,7 +196,7 @@ p + geom_point()
 #                (Answer with a single number, rounded up to 1-digit precision.)
 
 #first, lets have a look at countries
-table(df$subjinc)
+table(df$cntry)
 df$cntry<-as.factor(df$cntry)
 #let's run the model with a country
 m2<-lm(rlgatnd~age+sex+emplrel+marsts+subjinc+sexmar+cntry,data=df)
